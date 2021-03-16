@@ -36,18 +36,15 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo wget -O /etc/apt/sources.list.d/viva64.list https://files.viva64.com/etc/viva64.list; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update; sudo apt-get install -y pvs-studio; fi
 script:
-  - pvs-studio-analyzer credentials $PVS_USERNAME $PVS_KEY -o PVS-Studio.lic
   - eval "${MATRIX_EVAL}"
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-        cmake . -Bbuild "${CF}" -DCMAKE_EXPORT_COMPILE_COMMANDS=On;
-        pvs-studio-analyzer trace -- cmake --build build -j4;
-        pvs-studio-analyzer analyze -j2 -l PVS-Studio.lic -s ./suppress_base.json -o build/pvs.log;
-        plog-converter -a 'GA:1,2;64:1,2;OP:1,2' -t tasklist -o build/pvs.tasks build/pvs.log;
-        cat build/pvs.tasks
-    else
-        mkdir build;
-        cmake . -Bbuild "${CF}";
-        cmake --build build
-    fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then pvs-studio-analyzer credentials $PVS_USERNAME $PVS_KEY -o PVS-Studio.lic; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cmake . -Bbuild "${CF}" -DCMAKE_EXPORT_COMPILE_COMMANDS=On; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then pvs-studio-analyzer trace -- cmake --build build -j4; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then pvs-studio-analyzer analyze -j2 -l PVS-Studio.lic -s ./suppress_base.json -o build/pvs.log; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then plog-converter -a 'GA:1,2;64:1,2;OP:1,2' -t tasklist -o build/pvs.tasks build/pvs.log; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cat build/pvs.tasks; fi
+  - if [[ "$TRAVIS_OS_NAME" != "linux" ]]; then mkdir build; fi
+  - if [[ "$TRAVIS_OS_NAME" != "linux" ]]; then cmake . -Bbuild "${CF}"; fi
+  - if [[ "$TRAVIS_OS_NAME" != "linux" ]]; then cmake --build build; fi
   - cd build
   - cpack
