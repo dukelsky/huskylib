@@ -7,7 +7,6 @@ matrix:
   fast_finish: true
   include:
     - os: linux
-      sudo: false
       language: c
       addons:
         apt:
@@ -18,7 +17,6 @@ matrix:
       env:
         - MATRIX_EVAL="CC=gcc-8" CF=-DBUILD_SHARED_LIBS=OFF
     - os: linux
-      sudo: false
       language: c
       addons:
         apt:
@@ -29,7 +27,6 @@ matrix:
       env:
         - MATRIX_EVAL="CC=gcc-8" CF=-DBUILD_SHARED_LIBS=ON
     - os: osx
-      sudo: false
       language: c
       env:
         - MATRIX_EVAL="CC=clang" CF=-DBUILD_SHARED_LIBS=ON
