@@ -1,7 +1,5 @@
 language: c
 
-dist: xenial
-
 branches:
   only:
     - master
