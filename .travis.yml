@@ -3,7 +3,7 @@ language: c
 branches:
   only:
     - master
-matrix:
+jobs:
   fast_finish: true
   include:
     - os: linux
