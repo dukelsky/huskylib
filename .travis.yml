@@ -31,10 +31,10 @@ jobs:
       env:
         - MATRIX_EVAL="CC=clang" CF=-DBUILD_SHARED_LIBS=ON
 before_install:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y rpm fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then wget -q -O - https://files.viva64.com/etc/pubkey.txt | sudo apt-key add - fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo wget -O /etc/apt/sources.list.d/viva64.list https://files.viva64.com/etc/viva64.list fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update; sudo apt-get install -y pvs-studio fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y rpm; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then wget -q -O - https://files.viva64.com/etc/pubkey.txt | sudo apt-key add - ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo wget -O /etc/apt/sources.list.d/viva64.list https://files.viva64.com/etc/viva64.list; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update; sudo apt-get install -y pvs-studio; fi
 script:
   - pvs-studio-analyzer credentials $PVS_USERNAME $PVS_KEY -o PVS-Studio.lic
   - eval "${MATRIX_EVAL}"
