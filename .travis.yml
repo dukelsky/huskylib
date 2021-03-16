@@ -38,8 +38,8 @@ script:
   - eval "${MATRIX_EVAL}"
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then pvs-studio-analyzer credentials $PVS_USERNAME $PVS_KEY -o PVS-Studio.lic; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cmake . -Bbuild "${CF}" -DCMAKE_EXPORT_COMPILE_COMMANDS=On; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then pvs-studio-analyzer trace -- cmake --build build -j4; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then pvs-studio-analyzer analyze -j2 -l PVS-Studio.lic -s ./suppress_base.json -o build/pvs.log; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then pvs-studio-analyzer trace -- cmake --build build; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then pvs-studio-analyzer analyze -l PVS-Studio.lic -s ./suppress_base.json -o build/pvs.log; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then plog-converter -a 'GA:1,2;64:1,2;OP:1,2' -t tasklist -o build/pvs.tasks build/pvs.log; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cat build/pvs.tasks; fi
   - if [[ "$TRAVIS_OS_NAME" != "linux" ]]; then mkdir build; fi
