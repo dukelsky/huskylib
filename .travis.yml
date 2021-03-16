@@ -14,6 +14,8 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
+            - libcc1-0
+            - libgcc-8-dev
             - gcc-8
       env:
         - MATRIX_EVAL="CC=gcc-8" CF=-DBUILD_SHARED_LIBS=OFF
