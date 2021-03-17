@@ -42,7 +42,7 @@ script:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then pvs-studio-analyzer analyze -l PVS-Studio.lic -s ./suppress_base.json -o build/pvs.log; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then plog-converter -a 'GA:1,2;64:1,2;OP:1,2' -t tasklist -o build/pvs.tasks build/pvs.log; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cat build/pvs.tasks; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then numerr=$(grep -c ' err ' build/pvs.tasks); let numerr-=1; echo numerr=$numerr; [[ $numerr -gt 0 ]]; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ! grep ' err ' build/pvs.tasks; fi
   - if [[ "$TRAVIS_OS_NAME" != "linux" ]]; then mkdir build; fi
   - if [[ "$TRAVIS_OS_NAME" != "linux" ]]; then cmake . -Bbuild "${CF}"; fi
   - if [[ "$TRAVIS_OS_NAME" != "linux" ]]; then cmake --build build; fi
