@@ -124,7 +124,7 @@ s_log * openLog(char * fileName, char * appN)
     char * pathname = NULL;
     int error       = 0;
 
-    if(!fileName || !fileName[0])
+    if(!fileName || !fileName[0] || !filename)
     {
         fprintf(stderr, "Logfile not defined, log into screen instead\n");
         return NULL;
